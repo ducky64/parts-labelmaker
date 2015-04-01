@@ -2,3 +2,4 @@
 # Authentication data to pull data from DigiKey Search Web Service
 Username=YOUR_DIGIKEY_USERNAME
 Password=YOUR_DIGIKEY_PASSWORD
+PartnerId=GOOD_LUCK_FINDING_THIS
