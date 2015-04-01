@@ -25,7 +25,9 @@ class DigiKeyCrawlerInterface(object):
     # The part attributes table has a hanging </a> tag. Fail...
     content = re.sub(r'</a>', '', content)
     content = re.sub(r'<a[^>]*>', '', content)
-    content = re.sub(r'<img[^>]*>', '', content)
+    content = content.replace('&nbsp;', '')
+    content = content.replace('\n', '')
+    content = content.replace('\t', '')
 
     soup = BeautifulSoup(content)
     parametrics = {}
@@ -36,6 +38,7 @@ class DigiKeyCrawlerInterface(object):
     return parametrics
   
 if __name__ == '__main__':
+  # Simple demo and test script
   dksi = DigiKeyCrawlerInterface()
   pprint.pprint(dksi.get_component_parameters('IPD040N03LGINCT-ND'))
   

@@ -3,4 +3,5 @@ Label generator for electronic parts. Complete spreadsheet-to-labels functionali
 
 Dependent Python packages:
 For the DigiKey crawler interface (to get component data):
+- httplib2
 - BeautifulSoup
