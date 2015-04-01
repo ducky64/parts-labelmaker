@@ -2,6 +2,8 @@
 Label generator for electronic parts. Complete spreadsheet-to-labels functionality.
 
 Dependent Python packages:
+For the DigiKey crawler interface (to get component data):
+  BeautifulSoup
 For DigiKey SWS Interface (to get component data):
   pysimplesoap
   httplib2

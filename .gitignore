@@ -1,2 +1,3 @@
 # ignore .cfg files since they may contain sensitive auth data
 *.cfg
+.cache

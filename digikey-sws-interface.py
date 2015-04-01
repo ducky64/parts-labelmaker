@@ -2,8 +2,6 @@ import configparser
 
 from pysimplesoap.client import SoapClient
 
-
-
 class DigiKeySwsInterface(object):
   CONFIG_SECTION = 'DigiKeySwsInterface'
   def __init__(self):
@@ -21,8 +19,4 @@ class DigiKeySwsInterface(object):
     output = {}
     for component in components:
       output[component] = self.client.GetProductInfoByDigikeyPartNumber(digikeyPartNumber=component)
-  
-if __name__ == '__main__':
-  dksi = DigiKeySwsInterface()
-  print(dksi.get_component_parameters(['NDP7060-ND']))
   
