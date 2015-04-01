@@ -37,6 +37,5 @@ class DigiKeyCrawlerInterface(object):
   
 if __name__ == '__main__':
   dksi = DigiKeyCrawlerInterface()
-  #print(dksi.get_component_parameters('NDP7060-ND'))
   pprint.pprint(dksi.get_component_parameters('IPD040N03LGINCT-ND'))
   
