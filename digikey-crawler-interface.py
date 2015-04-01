@@ -2,7 +2,6 @@ import re
 import pprint
 
 from bs4 import BeautifulSoup
-from ghost import Ghost
 
 import httplib2
 
