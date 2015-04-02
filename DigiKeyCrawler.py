@@ -40,6 +40,19 @@ class DigiKeyCrawlerInterface(object):
   
     return parametrics
 
+def simplify_value(value, preferred=[]):
+  split = value.split(',')
+  first = None
+  for elt in split:
+    elt = elt.strip()
+    if elt.find('(') != -1:
+      elt = elt[:elt.find('(')]
+    if first is None:
+      first = elt
+    if elt in preferred:
+      return elt
+  return first
+
 def rewrite_gen(desc_fmt, parameter_key_rewrite, parameter_value_map):
   def inner(params):
     rewritten_params = {}
@@ -60,7 +73,8 @@ def rewrite_gen(desc_fmt, parameter_key_rewrite, parameter_value_map):
         param_key = parameter_key_map[param_key]
       if param_key in new_value_map and param_value in new_value_map[param_key]:
         param_value = new_value_map[param_key][param_value]
-      rewritten_params[param_key] = param_value
+      # TODO: make this preferred-agnostic
+      rewritten_params[param_key] = simplify_value(param_value, package_preferred)
       
     out_dict = {}
     out_dict['Desc'] = desc_fmt % rewritten_params
@@ -70,6 +84,7 @@ def rewrite_gen(desc_fmt, parameter_key_rewrite, parameter_value_map):
       out_dict['Package'] = rewritten_params['Package / Case']
     else:
       out_dict['Package'] = ""
+      
     out_dict['MfrDesc'] = rewritten_params['Description']
     out_dict['MfrPartNumber'] = rewritten_params['Manufacturer Part Number']
     params_dict = collections.OrderedDict()
@@ -160,6 +175,15 @@ category_rewrite = {
   {}),
 }
 
+package_preferred = [
+'TO-220',
+'TO-92',
+'DPak',
+'D\u00b2Pak',
+'DO-35',
+'DO-201',
+]
+
 class DigiKeyRewrite(object):
   def rewrite_parametrics(self, params):
     family = params['Family']
@@ -175,3 +199,4 @@ if __name__ == '__main__':
   # Simple demo and test script
   dksi = DigiKeyCrawlerInterface()
   pprint.pprint(dksi.get_component_parametrics('LM3940IT-3.3/NOPB'))
+  
