@@ -34,7 +34,7 @@ class CsvRewriter(object):
     self.out_keyed_data = {} # key_fields tuple to {value_key: value_value} dict 
     
   def read_input_csv(self, csv_filename):
-    with open(csv_filename) as csvfile:
+    with open(csv_filename, encoding='utf-8') as csvfile:
       reader = csv.DictReader(csvfile)
       fields = reader.fieldnames
       if self.fieldnames is None:
@@ -48,7 +48,7 @@ class CsvRewriter(object):
         self.in_data.append(row)
       
   def read_output_csv(self, csv_filename):
-    with open(csv_filename) as csvfile:
+    with open(csv_filename, encoding='utf-8') as csvfile:
       reader = csv.DictReader(csvfile)
       fields = reader.fieldnames
       if not all([elt in fields for elt in self.key_fields]):
@@ -64,7 +64,7 @@ class CsvRewriter(object):
   def write_output_csv(self, csv_filename):
     existing_count = 0
     processed_count = 0
-    with open(csv_filename, 'w', newline='') as csvfile:
+    with open(csv_filename, 'w', newline='', encoding='utf-8') as csvfile:
       writer = csv.DictWriter(csvfile,
                               fieldnames=self.fieldnames+self.value_fields)
       writer.writeheader()

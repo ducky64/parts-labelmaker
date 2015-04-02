@@ -4,7 +4,7 @@ def draw_text(c, text, x=0, y=0, clipx=None, anchor='cc',
   t.setTextOrigin(0, 0)
   t.setHorizScale(hscale*100)
   t.setFont(font, size)
-  t.textOut(text.decode("cp1251"))
+  t.textOut(text)
 
   c.saveState()
   c.translate(x, y)

@@ -23,7 +23,7 @@ class DigiKeyCrawlerInterface(object):
   def get_component_parametrics(self, component):
     h = httplib2.Http('.cache')
     resp_headers, content = h.request(self.URL_PREFIX + quote(component))
-    content = content.decode("utf-8")
+    content = content.decode('utf-8')
     
     # The part attributes table has a hanging </a> tag. Fail...
     content = re.sub(r'</a>', '', content)
@@ -111,8 +111,9 @@ category_rewrite = {
   {}),
                    
 'Diodes, Rectifiers - Single': rewrite_gen(
-  "Diode, %(Diode Type)s, %(Voltage - DC Reverse (Vr) (Max))s, %(Current - Average Rectified (Io))s",
-  [('Voltage - Forward (Vf) (Max) @ If', 'Vf')],
+  "Diode, %(Voltage - DC Reverse (Vr) (Max))s, %(Current - Average Rectified (Io))s",
+  [('Diode Type', 'Type'),
+   ('Voltage - Forward (Vf) (Max) @ If', 'Vf')],
   {}), 
 'Diodes - Zener - Single': rewrite_gen(
   "Zener, %(Voltage - Zener (Nom) (Vz))s",
@@ -121,7 +122,7 @@ category_rewrite = {
   {}),
                     
 'FETs - Single': rewrite_gen(
-  "%(FET Type)s, %(Drain to Source Voltage (Vdss))s, %(Current - Continuous Drain (Id) @ 25°C)s",
+  "%(FET Type)s, %(Drain to Source Voltage (Vdss))s, %(Current - Continuous Drain (Id) @ 25\u00b0C)s",
   [('Vgs(th) (Max) @ Id', 'Vth')],
   { 'FET Type': {
       'MOSFET N-Channel, Metal Oxide': 'NMOS',
@@ -130,12 +131,12 @@ category_rewrite = {
   }),
                     
 'Resistors': rewrite_gen(
-  "Resistor, %(Resistance (Ohms))s",
+  "Resistor, %(Resistance (Ohms))s\u03A9",
   [('Tolerance', 'Tol'),
    ('Power (Watts)', 'Pmax')],
   {}),
 'Potentiometers, Variable Resistors': rewrite_gen(
-  "Pot, %(Resistance (Ohms))s",
+  "Pot, %(Resistance (Ohms))s\u03A9",
   [('Tolerance', 'Tol'),
    ('Power (Watts)', 'Pmax')],
   {}),
@@ -167,7 +168,7 @@ category_rewrite = {
   {}),
                     
 'Connectors, Interconnects': rewrite_gen(
-  "Connector, %(Series)s, %(Number of Positions)s",
+  "Cnctr, %(Series)s, %(Number of Positions)sP",
   [('Cable Termination', 'Style'),
    ('Wire Gauge', 'Wire'),
    ('Pitch', 'Pitch'),
