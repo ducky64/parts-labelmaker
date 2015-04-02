@@ -159,7 +159,7 @@ category_rewrite = {
    ('Current - Test', 'Imax'),
    ('Wavelength - Dominant', '\u03bb'),
    ('Millicandela Rating', 'Intensity')],
-  {('Lens Style/Size', 'Package / Case'): {
+  {('Lens Style/Size', '_rewrite_package'): {
       'Round with Domed Top, 5mm (T-1 3/4), 5.00mm': '5mm'
     }
   }),
