@@ -4,7 +4,9 @@ import csv
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 from reportlab.lib.units import inch
+from reportlab.lib.utils import ImageReader
 
+import Code128
 import Common
 import PdfCommon
 
@@ -63,21 +65,16 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode,
   
   c.line(0, 0.625*inch, LABEL_SEC_WIDTH, 0.625*inch)
   
-  # Draw left side summary
-  #draw_rotated_text(c, "UCB EE192", 0, height/2)
-  #draw_centered_text(c, summary, summary_width/2, height*.5, size=48, hscale=.75)
-  #draw_centered_text(c, date, summary_width/2, height*0.95, font="Courier", size=9)
+  barcode_img = Code128.code128_image(barcode)
+  c.drawImage(ImageReader(barcode_img), 
+              LABEL_TEXT_MARGIN, 0.625*inch+LABEL_TEXT_MARGIN, 
+              width=LABEL_SEC_TWIDTH, height=0.25*inch - 2*LABEL_TEXT_MARGIN - 0.075*inch)
   
-  # Draw separator
-  #c.line(summary_width, 0, summary_width, height)
-  
-  # Draw right side barcode
+  PdfCommon.draw_text(c, barcode, 
+                      LABEL_TEXT_MARGIN + LABEL_SEC_TWIDTH / 2, 0.8125*inch, 
+                      clipx=LABEL_SEC_TWIDTH, anchor='cc', 
+                      font='Courier', size=6)
 
-  
-  #c128.getImage(code, 50).save("bar-%s.png" % code)
-  #c.drawImage("bar-%s.png" % code, 0.125*inch, 0.1*inch, width=barcode_width-0.125*inch, height=height*0.8-0.1*inch)
-  #draw_centered_text(c, code, barcode_width/2, height*0.95, font="Courier", size=9)
-  
   c.restoreState()
   
 INPUT_POSTFIX = "_labeled"
