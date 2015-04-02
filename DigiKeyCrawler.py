@@ -47,13 +47,14 @@ def rewrite_gen(desc_fmt, parameter_key_rewrite, parameter_value_map):
     
     new_value_map = {}
 
+    # TODO: refactor rewrite rules
     for key, val in parameter_value_map.items():
-      if isinstance(key, tuple):
+      if type(key) is tuple:
         new_value_map[key[1]] = val
         parameter_key_map[key[0]] = key[1]
       else:
         new_value_map[key] = val
-    
+
     for param_key, param_value in params.items():
       if param_key in parameter_key_map:
         param_key = parameter_key_map[param_key]
@@ -63,14 +64,14 @@ def rewrite_gen(desc_fmt, parameter_key_rewrite, parameter_value_map):
       
     out_dict = {}
     out_dict['Desc'] = desc_fmt % rewritten_params
-    if '_rewrite_package' in params:
-      out_dict['Package'] = params['_rewrite_package']
-    elif 'Package / Case' in params:
-      out_dict['Package'] = params['Package / Case']
+    if '_rewrite_package' in rewritten_params:
+      out_dict['Package'] = rewritten_params['_rewrite_package']
+    elif 'Package / Case' in rewritten_params:
+      out_dict['Package'] = rewritten_params['Package / Case']
     else:
       out_dict['Package'] = ""
-    out_dict['MfrDesc'] = params['Description']
-    out_dict['MfrPartNumber'] = params['Manufacturer Part Number']
+    out_dict['MfrDesc'] = rewritten_params['Description']
+    out_dict['MfrPartNumber'] = rewritten_params['Manufacturer Part Number']
     params_dict = collections.OrderedDict()
     for param in parameter_key_rewrite:
       param = param[1]
