@@ -64,7 +64,7 @@ class CsvRewriter(object):
   def write_output_csv(self, csv_filename):
     existing_count = 0
     processed_count = 0
-    with open(csv_filename, 'w') as csvfile:
+    with open(csv_filename, 'w', newline='') as csvfile:
       writer = csv.DictWriter(csvfile,
                               fieldnames=self.fieldnames+self.value_fields)
       writer.writeheader()

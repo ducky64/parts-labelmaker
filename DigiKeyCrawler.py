@@ -106,7 +106,7 @@ category_rewrite = {
   {}),
                     
 'FETs - Single': rewrite_gen(
-  "%(FET Type)s, %(Manufacturer Part Number)s, %(Drain to Source Voltage (Vdss))s, %(Current - Continuous Drain (Id) @ 25°C)s",
+  "%(FET Type)s, %(Drain to Source Voltage (Vdss))s, %(Current - Continuous Drain (Id) @ 25°C)s",
   [('Vgs(th) (Max) @ Id', 'Vth')],
   { 'FET Type': {
       'MOSFET N-Channel, Metal Oxide': 'NMOS',
