@@ -19,6 +19,9 @@ LABEL_HEIGHT = 1*inch
 LABEL_RADIUS = 0.0625*inch
 LABEL_MARGIN = 0.0625*inch
 
+LABEL_SPACING_WIDTH = 0.125*inch
+LABEL_SPACING_HEIGHT = 0 * inch
+
 # Drawable area
 LABEL_DWIDTH = LABEL_WIDTH - 2*LABEL_MARGIN # 2.5
 LABEL_DHEIGHT = LABEL_HEIGHT - 2*LABEL_MARGIN # 0.875
@@ -115,7 +118,7 @@ if __name__ == '__main__':
       rownum += 1
       if rownum >= PAGE_ROWS:
         c.restoreState()
-        c.translate(LABEL_WIDTH, 0)
+        c.translate(LABEL_WIDTH + LABEL_SPACING_WIDTH, LABEL_SPACING_HEIGHT)
         c.saveState()
         rownum = 0
         colnum += 1
