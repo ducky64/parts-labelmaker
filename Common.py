@@ -1,3 +1,4 @@
+import collections
 import csv
 
 def parametric_to_string(parametric_dict):
@@ -11,7 +12,7 @@ def parametric_to_string(parametric_dict):
   return out
 
 def string_to_parametric(parametric_string):
-  out_dict = {}
+  out_dict = collections.OrderedDict()
   parameters = parametric_string.split(";")
   for parameter in parameters:
     parameter_split = parameter.split('=')

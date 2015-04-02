@@ -46,13 +46,34 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode,
   
   PdfCommon.draw_text(c, desc, LABEL_TEXT_MARGIN, 0.125*inch, 
                       clipx=LABEL_MAIN_TWIDTH, anchor='lc', size=10)
+  
   c.line(0, 0.25*inch, LABEL_MAIN_WIDTH, 0.25*inch)
   
+  c.saveState()
+  p = c.beginPath()
+  p.rect(LABEL_TEXT_MARGIN, 0.25*inch, LABEL_MAIN_TWIDTH, 0.375*inch)
+  c.clipPath(p, stroke=0)
+  
+  x_pos = LABEL_TEXT_MARGIN
+  for param_key, param_val in parametrics.items():
+    kxinc, _ = PdfCommon.draw_text(c, param_key, x_pos, 0.3125*inch, anchor='lc', 
+                                   size=6)     
+    vxinc, _ = PdfCommon.draw_text(c, param_val, x_pos, 0.4375*inch, anchor='lc', 
+                                   size=8)
+    x_pos += max(kxinc, vxinc) + LABEL_TEXT_MARGIN*2
+    
+  c.restoreState()
+    
   c.line(0, 0.625*inch, LABEL_MAIN_WIDTH, 0.625*inch)
+  
   PdfCommon.draw_text(c, mfrdesc, LABEL_TEXT_MARGIN, 0.6875*inch, 
                       clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
                       font='Courier', size=6)
   c.line(0, 0.75*inch, LABEL_MAIN_WIDTH, 0.75*inch)
+  
+  PdfCommon.draw_text(c, "< MFR P/N", LABEL_MAIN_TWIDTH-LABEL_TEXT_MARGIN, 0.8125*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='rc', 
+                      font='Courier', size=4)
   PdfCommon.draw_text(c, mfrpn, LABEL_TEXT_MARGIN, 0.8125*inch, 
                       clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
                       font='Courier-Bold', size=6)

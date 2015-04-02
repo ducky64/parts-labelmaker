@@ -44,9 +44,11 @@ def simplify_value(value, preferred=[]):
   split = value.split(',')
   first = None
   for elt in split:
-    elt = elt.strip()
     if elt.find('(') != -1:
       elt = elt[:elt.find('(')]
+    if elt.find('@') != -1:
+      elt = elt[:elt.find('@')]
+    elt = elt.strip()
     if first is None:
       first = elt
     if elt in preferred:
@@ -155,7 +157,7 @@ category_rewrite = {
   "LED, %(Color)s",
   [('Voltage - Forward (Vf) (Typ)', 'Vf'),
    ('Current - Test', 'Imax'),
-   ('Wavelength - Dominant', 'Wavelength'),
+   ('Wavelength - Dominant', '\u03bb'),
    ('Millicandela Rating', 'Intensity')],
   {('Lens Style/Size', 'Package / Case'): {
       'Round with Domed Top, 5mm (T-1 3/4), 5.00mm': '5mm'
