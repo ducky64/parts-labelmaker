@@ -24,6 +24,11 @@ LABEL_DWIDTH = LABEL_WIDTH - 2*LABEL_MARGIN # 2.5
 LABEL_DHEIGHT = LABEL_HEIGHT - 2*LABEL_MARGIN # 0.875
 
 LABEL_MAIN_WIDTH = 1.5*inch
+LABEL_SEC_WIDTH = LABEL_DWIDTH - LABEL_MAIN_WIDTH
+
+LABEL_TEXT_MARGIN = 0.025*inch
+LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
+LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 
 def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, 
              border=False):
@@ -34,20 +39,26 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode,
   c.translate(LABEL_MARGIN, LABEL_MARGIN)
   c.roundRect(0, 0, LABEL_DWIDTH, LABEL_DHEIGHT, LABEL_RADIUS)
   
-  PdfCommon.draw_text(c, desc, LABEL_MARGIN, 0.125*inch, anchor='lc', size=10)
+  PdfCommon.draw_text(c, desc, LABEL_TEXT_MARGIN, 0.125*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', size=10)
   c.line(0, 0.25*inch, LABEL_MAIN_WIDTH, 0.25*inch)
   
   c.line(0, 0.625*inch, LABEL_MAIN_WIDTH, 0.625*inch)
-  PdfCommon.draw_text(c, mfrdesc, LABEL_MARGIN, 0.6875*inch, anchor='lc', 
+  PdfCommon.draw_text(c, mfrdesc, LABEL_TEXT_MARGIN, 0.6875*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
                       font='Courier', size=6)
   c.line(0, 0.75*inch, LABEL_MAIN_WIDTH, 0.75*inch)
-  PdfCommon.draw_text(c, mfrpn, LABEL_MARGIN, 0.8125*inch, anchor='lc', 
+  PdfCommon.draw_text(c, mfrpn, LABEL_TEXT_MARGIN, 0.8125*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
                       font='Courier-Bold', size=6)
   
   c.translate(LABEL_MAIN_WIDTH, 0)
   c.line(0, 0, 0, LABEL_DHEIGHT)
   
-  PdfCommon.draw_text(c, package, LABEL_MARGIN, 0.0625*inch, anchor='lc')
+  PdfCommon.draw_text(c, package, LABEL_TEXT_MARGIN, 0.0625*inch, 
+                      clipx=LABEL_SEC_TWIDTH, anchor='lc')
+  
+  c.line(0, 0.625*inch, LABEL_SEC_WIDTH, 0.625*inch)
   
   # Draw left side summary
   #draw_rotated_text(c, "UCB EE192", 0, height/2)

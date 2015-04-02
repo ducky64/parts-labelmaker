@@ -1,5 +1,5 @@
-def draw_text(c, text, x=0, y=0, anchor='cc', font='Helvetica', size=8,
-              hscale=1):
+def draw_text(c, text, x=0, y=0, clipx=None, anchor='cc', 
+              font='Helvetica', size=8, hscale=1):
   t = c.beginText()
   t.setTextOrigin(0, 0)
   t.setHorizScale(hscale*100)
@@ -8,7 +8,18 @@ def draw_text(c, text, x=0, y=0, anchor='cc', font='Helvetica', size=8,
 
   c.saveState()
   c.translate(x, y)
-  
+  if clipx is not None:
+    p = c.beginPath()
+    if anchor[0] == 'l':
+      p.rect(0, -10000, clipx, 20000)
+    elif anchor[0] == 'c':
+      p.rect(-clipx/2, -10000, clipx, 20000)
+    elif anchor[0] == 'r':
+      p.rect(-clipx, -10000, clipx, 20000)
+    else:
+      assert(False)
+    c.clipPath(p, stroke=0)
+      
   if anchor[0] == 'l':
     c.translate(0, 0)
   elif anchor[0] == 'c':
