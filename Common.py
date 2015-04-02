@@ -10,6 +10,16 @@ def parametric_to_string(parametric_dict):
     out += key + "=" + val
   return out
 
+def string_to_parametric(parametric_string):
+  out_dict = {}
+  parameters = parametric_string.split(";")
+  for parameter in parameters:
+    parameter_split = parameter.split('=')
+    if len(parameter_split) != 2:
+      continue
+    out_dict[parameter_split[0]] = parameter_split[1]
+  return out_dict
+
 class CsvSanityError(Exception):
   pass
 
@@ -73,3 +83,4 @@ class CsvRewriter(object):
         
       print("%i existing entries, %i newly processed entries" 
             % (existing_count, processed_count))
+      

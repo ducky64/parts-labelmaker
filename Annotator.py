@@ -1,5 +1,4 @@
 import argparse
-import csv
 import os
 
 import Common
@@ -26,9 +25,6 @@ if __name__ == '__main__':
   parser.add_argument('--filename', '-f', required=True,
                       help="Input filename, without the .csv extension")
   args = parser.parse_args()
-  
-  # dict of (Supplier, SupplierPartNumber) to part parametrics dict
-  parametric_data = {}
   
   input_filename = args.filename + '.csv'
   output_filename = args.filename + OUTPUT_POSTFIX + '.csv'
