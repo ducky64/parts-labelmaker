@@ -35,7 +35,7 @@ LABEL_TEXT_MARGIN = 0.025*inch
 LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 
-def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, 
+def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
              border=False):
   c.saveState()
   if border:
@@ -63,6 +63,8 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode,
     x_pos += max(kxinc, vxinc) + LABEL_TEXT_MARGIN*2
     
   c.restoreState()
+    
+  PdfCommon.draw_text(c, notes, LABEL_TEXT_MARGIN, 0.5625*inch, anchor='lc', size=6)     
     
   c.line(0, 0.625*inch, LABEL_MAIN_WIDTH, 0.625*inch)
   
@@ -125,10 +127,13 @@ if __name__ == '__main__':
 
     for row in reader:
       print("Generating %s='%s'" % (row['Barcode'], row['Desc']))
+      notes = ""
+      if 'Notes' in row:
+        notes = row['Notes']
       draw_set(c, row['Desc'], row['Package'],
                Common.string_to_parametric(row['Parameters']),
                row['MfrDesc'], row['MfrPartNumber'],
-               row['Barcode'],
+               row['Barcode'], notes,
                border=args.border)
       
       c.translate(0, LABEL_HEIGHT)
