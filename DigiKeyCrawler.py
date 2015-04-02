@@ -1,5 +1,7 @@
+import collections
 import re
 import pprint
+from urllib.parse import quote
 
 from bs4 import BeautifulSoup
 
@@ -9,7 +11,7 @@ class DigiKeyCrawlerInterface(object):
   URL_PREFIX = 'http://search.digikey.com/scripts/DkSearch/dksus.dll?Detail?name='
 
   def parse_table(self, soup_table):
-    elements = {}
+    elements = collections.OrderedDict()
     for row in soup_table.findChildren('tr'):
       header = row.find('th')
       value = row.find('td')
@@ -17,9 +19,9 @@ class DigiKeyCrawlerInterface(object):
         elements[header.get_text()] = value.get_text()
     return elements
     
-  def get_component_parameters(self, component):
+  def get_component_parametrics(self, component):
     h = httplib2.Http('.cache')
-    resp_headers, content = h.request(self.URL_PREFIX + component)
+    resp_headers, content = h.request(self.URL_PREFIX + quote(component))
     content = content.decode("utf-8")
     
     # The part attributes table has a hanging </a> tag. Fail...
@@ -30,15 +32,18 @@ class DigiKeyCrawlerInterface(object):
     content = content.replace('\t', '')
 
     soup = BeautifulSoup(content)
-    parametrics = {}
+    parametrics = collections.OrderedDict()
 
     parametrics.update(self.parse_table(soup.find('table', 'product-details')))
     parametrics.update(self.parse_table(soup.find('td', 'attributes-table-main')))
   
     return parametrics
   
+class DigiKeyRewrite(object):
+  def rewrite_parametrics(self):
+    pass
+
 if __name__ == '__main__':
   # Simple demo and test script
   dksi = DigiKeyCrawlerInterface()
-  pprint.pprint(dksi.get_component_parameters('IPD040N03LGINCT-ND'))
-  
+  pprint.pprint(dksi.get_component_parametrics('LM3940IT-3.3/NOPB'))

@@ -1,6 +1,9 @@
-# ignore .cfg files since they may contain sensitive auth data
+# Ignore .cfg files since they may contain sensitive auth data
 *.cfg
 .cache
 
 *.pyc
+
+# Don't store annotated data
+*_annotated.csv
 
