@@ -139,7 +139,7 @@ category_rewrite = {
   "LED, %(Color)s",
   [('Voltage - Forward (Vf) (Typ)', 'Vf'),
    ('Current - Test', 'Imax'),
-   ('Wavelength - Dominant', 'λ'),
+   ('Wavelength - Dominant', 'Wavelength'),
    ('Millicandela Rating', 'Intensity')],
   {('Lens Style/Size', 'Package / Case'): {
       'Round with Domed Top, 5mm (T-1 3/4), 5.00mm': '5mm'
