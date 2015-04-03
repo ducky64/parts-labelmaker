@@ -169,11 +169,21 @@ category_rewrite = {
   [],
   {}),
                     
-'Connectors, Interconnects': rewrite_gen(
+'Rectangular Connectors - Headers, Male Pins': rewrite_gen(
+  "Header, %(Series)s, %(Number of Positions)sP",
+  [('Pitch', 'Pitch'),
+   ],
+  {}),
+'Rectangular Connectors - Free Hanging, Panel Mount': rewrite_gen(
   "Cnctr, %(Series)s, %(Number of Positions)sP",
   [('Cable Termination', 'Style'),
    ('Wire Gauge', 'Wire'),
    ('Pitch', 'Pitch'),
+   ],
+  {}),
+'Sockets for ICs, Transistors': rewrite_gen(
+  "Socket, %(Type)s %(Number of Positions or Pins (Grid))s",
+  [('Pitch - Mating', 'Pitch')
    ],
   {}),
 }

@@ -58,6 +58,9 @@ class CsvRewriter(object):
         raise CsvSanityError("Output '%s' missing value fields" % csv_filename)
       for row in reader:
         keys = tuple([row[key_field] for key_field in self.key_fields])
+        if all([not row[key] for key in self.value_fields]):
+          # Ignore output fields if all empty
+          continue
         values = {key: row[key] for key in self.value_fields}
         assert keys not in self.out_keyed_data
         self.out_keyed_data[keys] = values

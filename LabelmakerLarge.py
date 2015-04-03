@@ -35,6 +35,8 @@ LABEL_TEXT_MARGIN = 0.025*inch
 LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 
+HSCALE = 0.85
+
 def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
              border=False):
   c.saveState()
@@ -44,9 +46,19 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
   c.translate(LABEL_MARGIN, LABEL_MARGIN)
   c.roundRect(0, 0, LABEL_DWIDTH, LABEL_DHEIGHT, LABEL_RADIUS)
   
-  PdfCommon.draw_text(c, desc, LABEL_TEXT_MARGIN, 0.125*inch, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', size=10)
-  
+  PdfCommon.draw_text(c, "< MFR P/N", LABEL_MAIN_TWIDTH-LABEL_TEXT_MARGIN, 0.0625*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='rc', 
+                      font='Courier', size=4, hscale=HSCALE)
+  PdfCommon.draw_text(c, mfrpn, LABEL_TEXT_MARGIN, 0.0625*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
+                      font='Courier-Bold', size=6, hscale=HSCALE)
+
+  c.line(0, 0.125*inch, LABEL_MAIN_WIDTH, 0.125*inch)
+   
+  PdfCommon.draw_text(c, mfrdesc, LABEL_TEXT_MARGIN, 0.1875*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
+                      font='Courier', size=6, hscale=HSCALE)
+   
   c.line(0, 0.25*inch, LABEL_MAIN_WIDTH, 0.25*inch)
   
   c.saveState()
@@ -57,34 +69,27 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
   x_pos = LABEL_TEXT_MARGIN
   for param_key, param_val in parametrics.items():
     kxinc, _ = PdfCommon.draw_text(c, param_key, x_pos, 0.3125*inch, anchor='lc', 
-                                   size=6)     
+                                   size=6, hscale=HSCALE)     
     vxinc, _ = PdfCommon.draw_text(c, param_val, x_pos, 0.4375*inch, anchor='lc', 
-                                   size=8)
+                                   size=8, hscale=HSCALE)
     x_pos += max(kxinc, vxinc) + LABEL_TEXT_MARGIN*2
     
   c.restoreState()
     
-  PdfCommon.draw_text(c, notes, LABEL_TEXT_MARGIN, 0.5625*inch, anchor='lc', size=6)     
+  PdfCommon.draw_text(c, notes, LABEL_TEXT_MARGIN, 0.5625*inch, anchor='lc', 
+                      size=6, hscale=HSCALE)     
     
   c.line(0, 0.625*inch, LABEL_MAIN_WIDTH, 0.625*inch)
   
-  PdfCommon.draw_text(c, mfrdesc, LABEL_TEXT_MARGIN, 0.6875*inch, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
-                      font='Courier', size=6)
-  c.line(0, 0.75*inch, LABEL_MAIN_WIDTH, 0.75*inch)
-  
-  PdfCommon.draw_text(c, "< MFR P/N", LABEL_MAIN_TWIDTH-LABEL_TEXT_MARGIN, 0.8125*inch, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='rc', 
-                      font='Courier', size=4)
-  PdfCommon.draw_text(c, mfrpn, LABEL_TEXT_MARGIN, 0.8125*inch, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
-                      font='Courier-Bold', size=6)
+  PdfCommon.draw_text(c, desc, LABEL_TEXT_MARGIN, 0.75*inch, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='lc',
+                      font='Helvetica-Bold', size=10, hscale=HSCALE)
   
   c.translate(LABEL_MAIN_WIDTH, 0)
   c.line(0, 0, 0, LABEL_DHEIGHT)
   
   PdfCommon.draw_text(c, package, LABEL_TEXT_MARGIN, 0.0625*inch, 
-                      clipx=LABEL_SEC_TWIDTH, anchor='lc')
+                      clipx=LABEL_SEC_TWIDTH, anchor='lc', hscale=HSCALE)
   
   c.line(0, 0.625*inch, LABEL_SEC_WIDTH, 0.625*inch)
   
@@ -148,6 +153,7 @@ if __name__ == '__main__':
       if colnum >= PAGE_COLS:
         c.showPage()
         c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
+        c.saveState()
         colnum = 0
         # TODO implement multiple pages
             
