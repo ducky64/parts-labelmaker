@@ -41,7 +41,7 @@ def draw_text(c, text, x=0, y=0, clipx=None, anchor='cc',
   c.drawText(t)
   c.restoreState()
   
-  return (t.getX(), size/1.6)
+  return (t.getX()*hscale, size/1.6)
   
 def draw_smallcaps(c, text, scale_lower=0.8, scale_upper=1, **kwargs):
   pass  # INTEGRATE WITH DRAW_TEXXT

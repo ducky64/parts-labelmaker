@@ -155,7 +155,6 @@ if __name__ == '__main__':
         c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
         c.saveState()
         colnum = 0
-        # TODO implement multiple pages
-            
+
     c.showPage()
     c.save()
