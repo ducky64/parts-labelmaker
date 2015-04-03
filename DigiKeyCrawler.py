@@ -51,8 +51,9 @@ def simplify_value(value, preferred=[]):
     elt = elt.strip()
     if first is None:
       first = elt
-    if elt in preferred:
-      return elt
+    for preferred_elt in preferred:
+      if elt.find(preferred_elt) != -1:
+        return elt
   return first
 
 def rewrite_gen(desc_fmt, parameter_key_rewrite, parameter_value_map):
@@ -104,12 +105,13 @@ def rewrite_gen(desc_fmt, parameter_key_rewrite, parameter_value_map):
 # to a rewrite rule (function) which generates the needed dict 
 category_rewrite = {
 'Integrated Circuits (ICs)': rewrite_gen(
-  "%(Manufacturer Part Number)s",
+  "IC, %(Manufacturer Part Number)s",
   [],
   {}),
 'PMIC - Voltage Regulators - Linear (LDO)': rewrite_gen(
   "LDO, %(Voltage - Output)s, %(Current - Output)s",
-  [('Voltage - Input', 'Vin')],
+  [('Voltage - Input', 'Vin'),
+   ('Voltage - Dropout (Typical)', 'Vdrop')],
   {}),
                    
 'Diodes, Rectifiers - Single': rewrite_gen(
@@ -184,6 +186,12 @@ category_rewrite = {
 'Sockets for ICs, Transistors': rewrite_gen(
   "Socket, %(Type)s %(Number of Positions or Pins (Grid))s",
   [('Pitch - Mating', 'Pitch')
+   ],
+  {}),
+                    
+'Thermal - Heat Sinks': rewrite_gen(
+  "Heatsink, %(Power Dissipation @ Temperature Rise)s, %(Package Cooled)s",
+  [('Material', 'Material')
    ],
   {}),
 }
