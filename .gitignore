@@ -4,6 +4,7 @@
 
 *.pyc
 
-# Don't store annotated data
+# Don't store output data
 *_annotated.csv
-
+*_labeled.csv
+*.pdf
