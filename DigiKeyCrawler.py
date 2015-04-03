@@ -146,9 +146,16 @@ category_rewrite = {
   {}),
 'Capacitors': rewrite_gen(
   "Capacitor, %(Capacitance)s",
-  [('Tolerance', 'Tol'),
+  [('Chemistry', 'Chemistry'),
+   ('Tolerance', 'Tol'),
    ('Voltage - Rated', 'Vmax')],
-  {}),
+  {('Family', 'Chemistry'): {
+      'Aluminum Capacitors': 'Aluminum',
+      'Tantalum Capacitors': 'Tantalum',
+      'Ceramic Capacitors': 'Ceramic',
+      'Electric Double Layer Capacitors, Supercaps': 'Supercap',
+    }
+  }),
 'Fixed Inductors': rewrite_gen(
   "Inductor, %(Inductance)s, %(Current Rating)s",
   [('Tolerance', 'Tol'),
