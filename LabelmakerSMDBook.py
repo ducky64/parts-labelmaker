@@ -14,10 +14,10 @@ PAGE_MARGIN_WIDTH = 1*cm
 PAGE_MARGIN_HEIGHT = 11*inch - 1*cm
 
 PAGE_ROWS = 12
-PAGE_COLS = 6
+PAGE_COLS = 5
 
 LABEL_WIDTH = 5*cm
-LABEL_HEIGHT = 1.45*cm
+LABEL_HEIGHT = 1.44*cm
 
 LABEL_MAIN_WIDTH = 3*cm
 LABEL_SEC_WIDTH = LABEL_WIDTH - LABEL_MAIN_WIDTH
@@ -28,21 +28,22 @@ LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_THEIGHT = LABEL_HEIGHT - 2*LABEL_TEXT_MARGIN
 
-FONT_LARGE = 9
-FONT_MAIN = 7
+FONT_LARGE = 8
+FONT_MAIN = 6
 FONT_SMALL = 5
 HSCALE = 0.85
 
 def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
              border=False):
   c.saveState()
+  c.setLineWidth(0.5)
   
   PdfCommon.draw_text(c, desc, LABEL_TEXT_MARGIN, 0.2*cm, 
-                      clipx=LABEL_TWIDTH, anchor='lc',
-                      font='Helvetica-Bold', size=FONT_MAIN, hscale=HSCALE)
+                      clipx=LABEL_MAIN_TWIDTH, anchor='lc',
+                      font='Helvetica-Bold', size=FONT_LARGE, hscale=HSCALE)
   
-  PdfCommon.draw_text(c, package, LABEL_TWIDTH+LABEL_TEXT_MARGIN, 0.2*cm, 
-                      clipx=LABEL_TWIDTH, anchor='rc',
+  PdfCommon.draw_text(c, package, LABEL_MAIN_TWIDTH+LABEL_TEXT_MARGIN, 0.2*cm, 
+                      clipx=LABEL_MAIN_TWIDTH, anchor='rc',
                       size=FONT_MAIN, hscale=HSCALE)
   
   c.saveState()
@@ -52,7 +53,7 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
   
   x_pos = LABEL_TEXT_MARGIN
   for param_key, param_val in parametrics.items():
-    kxinc, _ = PdfCommon.draw_text(c, param_key, x_pos, 0.45*cm, anchor='lc', 
+    kxinc, _ = PdfCommon.draw_text(c, param_key, x_pos, 0.475*cm, anchor='lc', 
                                    size=FONT_SMALL, hscale=HSCALE)     
     vxinc, _ = PdfCommon.draw_text(c, param_val, x_pos, 0.7*cm, anchor='lc', 
                                    size=FONT_MAIN, hscale=HSCALE)
@@ -67,24 +68,24 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
                       font='Courier-Bold', size=FONT_MAIN, hscale=HSCALE)
   
   PdfCommon.draw_text(c, mfrdesc, LABEL_TEXT_MARGIN, 1.3*cm, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
+                      clipx=LABEL_TWIDTH, anchor='lc', 
                       font='Courier', size=FONT_MAIN, hscale=HSCALE)
   
 
 
   c.translate(LABEL_MAIN_WIDTH, 0)
   
-  c.line(0, 0.4*cm, LABEL_SEC_WIDTH, 0.4*cm)
-  c.line(0, 0.4*cm, 0, LABEL_HEIGHT)
+  c.line(0, LABEL_HEIGHT-0.3*cm, LABEL_SEC_WIDTH, LABEL_HEIGHT-0.3*cm)
+  c.line(0, 0, 0, LABEL_HEIGHT-0.3*cm)
   
   barcode_img = Code128.code128_image(barcode)
   c.drawImage(ImageReader(barcode_img), 
-              LABEL_TEXT_MARGIN, LABEL_TEXT_MARGIN + 0.4*cm, 
-              width=LABEL_SEC_TWIDTH, height=LABEL_THEIGHT - 0.2*cm - 0.4*cm)
+              LABEL_TEXT_MARGIN, LABEL_TEXT_MARGIN, 
+              width=LABEL_SEC_TWIDTH, height=LABEL_THEIGHT - 0.2*cm - 0.3*cm)
   
   PdfCommon.draw_text(c, barcode, 
                       LABEL_TEXT_MARGIN + LABEL_SEC_TWIDTH / 2, 
-                      LABEL_TEXT_MARGIN + LABEL_THEIGHT - 0.08*cm,
+                      LABEL_TEXT_MARGIN + LABEL_THEIGHT - 0.38*cm,
                       clipx=LABEL_SEC_TWIDTH, anchor='cc', 
                       font='Courier', size=FONT_MAIN)
 
@@ -120,6 +121,22 @@ if __name__ == '__main__':
 
     for row in reader:
       print("Generating %s='%s'" % (row['Barcode'], row['Desc']))
+      
+      if 'Page' in row and row['Page'] and rownum != 0:
+        c.line(0, 0, LABEL_WIDTH, 0)
+        c.restoreState()
+        c.line(LABEL_WIDTH, 0, LABEL_WIDTH, LABEL_HEIGHT * PAGE_ROWS)
+        c.translate(LABEL_WIDTH, 0)
+        c.saveState()
+        rownum = 0
+        colnum += 1
+        if colnum >= PAGE_COLS:
+          c.showPage()
+          c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
+          c.rotate(-90)
+          c.saveState()
+          colnum = 0
+      
       notes = ""
       if 'Notes' in row:
         notes = row['Notes']
@@ -130,8 +147,12 @@ if __name__ == '__main__':
                row['Barcode'], notes,
                border=args.border)
       
-      c.translate(0, LABEL_HEIGHT)
-      
+      if 'Cells' in row and row['Cells']:
+        for _ in range(int(row['Cells'])):
+          c.translate(0, LABEL_HEIGHT)
+      else:
+        c.translate(0, LABEL_HEIGHT)
+        
       rownum += 1
       if rownum >= PAGE_ROWS:
         c.line(0, 0, LABEL_WIDTH, 0)

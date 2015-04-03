@@ -203,6 +203,7 @@ category_rewrite = {
 package_preferred = [
 'TO-220',
 'TO-92',
+'SOT-23',
 'DPak',
 'D\u00b2Pak',
 'DO-35',
