@@ -65,5 +65,5 @@ def draw_rotated_text(c, text, x=0, y=0, rot=-90, **kwargs):
   c.saveState()
   c.translate(x, y)
   c.rotate(rot)
-  draw_smallcaps(c, text, **kwargs)
+  draw_text(c, text, **kwargs)
   c.restoreState()

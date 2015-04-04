@@ -35,7 +35,7 @@ LABEL_TEXT_MARGIN = 0.025*inch
 LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 
-FONT_LARGE = 11
+FONT_LARGE = 13
 FONT_MAIN = 7
 FONT_SMALL = 5
 HSCALE = 0.8
@@ -48,6 +48,8 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
     
   c.translate(LABEL_MARGIN, LABEL_MARGIN)
   c.roundRect(0, 0, LABEL_DWIDTH, LABEL_DHEIGHT, LABEL_RADIUS)
+  
+  c.setLineWidth(0.5)
   
   PdfCommon.draw_text(c, "< MFR P/N", LABEL_MAIN_TWIDTH+LABEL_TEXT_MARGIN, 0.0625*inch, 
                       clipx=LABEL_MAIN_TWIDTH, anchor='rc', 
