@@ -10,8 +10,8 @@ import Code128
 import Common
 import PdfCommon
 
-PAGE_MARGIN_WIDTH = 0.5*cm
-PAGE_MARGIN_HEIGHT = 11*inch - 0.5*cm
+PAGE_MARGIN_WIDTH = 8.5*inch - 1*cm
+PAGE_MARGIN_HEIGHT = 1*cm
 
 PAGE_ROWS = 12
 PAGE_COLS = 4
@@ -19,7 +19,7 @@ PAGE_COLS = 4
 PAGE_WIDTH = 6.5*cm
 
 LABEL_WIDTH = 5*cm
-LABEL_HEIGHT = 1.44*cm
+LABEL_HEIGHT = 1.42*cm
 
 LABEL_MAIN_WIDTH = 3*cm
 LABEL_SEC_WIDTH = LABEL_WIDTH - LABEL_MAIN_WIDTH
@@ -78,7 +78,7 @@ class SmdBookLabels():
     
   def init_page(self):
     c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
-    c.rotate(-90)
+    c.rotate(90)
     c.setLineWidth(0.5)
     self.init_col()
 
@@ -122,11 +122,11 @@ class SmdBookLabels():
   
     self.c.line(0, 0.9*cm, LABEL_MAIN_WIDTH, 0.9*cm)
   
-    PdfCommon.draw_text(self.c, mfrpn, LABEL_TEXT_MARGIN, 1.05*cm, 
+    PdfCommon.draw_text(self.c, mfrpn, LABEL_TEXT_MARGIN, 1.03*cm, 
                         clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
                         font='Courier-Bold', size=FONT_MAIN, hscale=HSCALE)
     
-    PdfCommon.draw_text(self.c, mfrdesc, LABEL_TEXT_MARGIN, 1.3*cm, 
+    PdfCommon.draw_text(self.c, mfrdesc, LABEL_TEXT_MARGIN, 1.28*cm, 
                         clipx=LABEL_TWIDTH, anchor='lc', 
                         font='Courier', size=FONT_MAIN, hscale=HSCALE)
 
