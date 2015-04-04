@@ -10,13 +10,13 @@ import Code128
 import Common
 import PdfCommon
 
-PAGE_MARGIN_WIDTH = 1*cm
-PAGE_MARGIN_HEIGHT = 11*inch - 1*cm
+PAGE_MARGIN_WIDTH = 0.5*cm
+PAGE_MARGIN_HEIGHT = 11*inch - 0.5*cm
 
 PAGE_ROWS = 12
 PAGE_COLS = 4
 
-PAGE_WIDTH = 6.0*cm
+PAGE_WIDTH = 6.5*cm
 
 LABEL_WIDTH = 5*cm
 LABEL_HEIGHT = 1.44*cm
@@ -56,10 +56,10 @@ class SmdBookLabels():
   def init_col(self, col_name=""):
     c.saveState()
     c.translate(PAGE_WIDTH * self.colnum, 0)
-    c.line(0, 0, 0, LABEL_HEIGHT * PAGE_ROWS)
+    c.line(0, -10000, 0, LABEL_HEIGHT * PAGE_ROWS + 10000)
     c.line(LABEL_WIDTH, 0, LABEL_WIDTH, LABEL_HEIGHT * PAGE_ROWS)
     c.line(LABEL_WIDTH + 0.5*cm, 0, LABEL_WIDTH + 0.5*cm, LABEL_HEIGHT * PAGE_ROWS)
-    c.line(PAGE_WIDTH, 0, PAGE_WIDTH, LABEL_HEIGHT * PAGE_ROWS)
+    c.line(PAGE_WIDTH, -10000, PAGE_WIDTH, LABEL_HEIGHT * PAGE_ROWS + 10000)
     PdfCommon.draw_rotated_text(c, col_name, 
                                 LABEL_WIDTH + 0.25*cm, 
                                 LABEL_HEIGHT * PAGE_ROWS / 2,
