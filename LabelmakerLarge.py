@@ -41,7 +41,7 @@ FONT_MAIN = 7
 FONT_SMALL = 5
 HSCALE = 0.75
 
-BARCODE_SCALE = 0.003*inch
+BARCODE_SCALE = 0.0025*inch
 
 def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
              border=False):
