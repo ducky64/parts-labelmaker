@@ -35,7 +35,7 @@ LABEL_TEXT_MARGIN = 0.025*inch
 LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 
-FONT_LARGE = 13
+FONT_LARGE = 14
 FONT_MAIN = 7
 FONT_SMALL = 5
 HSCALE = 0.8
@@ -132,27 +132,28 @@ if __name__ == '__main__':
     c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
     c.saveState()
     
-    rownum = 0 # x position
-    colnum = 0 # y position
+    rownum = 5 # y position
+    colnum = 0 # x position
 
     for row in reader:
       print("Generating %s='%s'" % (row['Barcode'], row['Desc']))
       notes = ""
       if 'Notes' in row:
         notes = row['Notes']
+      
+      c.saveState()
+      c.translate(colnum*LABEL_WIDTH, rownum*LABEL_HEIGHT)
+        
       draw_set(c, row['Desc'], row['Package'],
                Common.string_to_parametric(row['Parameters']),
                row['MfrDesc'], row['MfrPartNumber'],
                row['Barcode'], notes,
                border=args.border)
       
-      c.translate(0, LABEL_HEIGHT)
+      c.restoreState()
       
       rownum += 1
       if rownum >= PAGE_ROWS:
-        c.restoreState()
-        c.translate(LABEL_WIDTH + LABEL_SPACING_WIDTH, LABEL_SPACING_HEIGHT)
-        c.saveState()
         rownum = 0
         colnum += 1
       if colnum >= PAGE_COLS:

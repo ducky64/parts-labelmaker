@@ -1,9 +1,5 @@
-Page,Cells,Barcode,Notes,Supplier,SupplierPartNumber
-LEDs,,LES06-RED,,DigiKey,475-2512-1-ND
-,,LES08-RED,,DigiKey,475-1415-1-ND
-,,LES06-YELLOW,,DigiKey,754-1125-1-ND
-,,LES08-YELLOW,,DigiKey,475-2560-1-ND
-,,LES06-GREEN,,DigiKey,754-1121-1-ND
-,,LES08-GREEN,,DigiKey,475-1410-1-ND
-,,LES06-BLUE,,DigiKey,475-2816-1-ND
-,,LES08-BLUE,,DigiKey,160-1645-1-ND
+Barcode,Notes,Supplier,SupplierPartNumber
+CNW01-MTA8,Part numbers approximate,DigiKey,A30984-ND
+ICP14-NOR,Part numbers approximate,DigiKey,296-1564-5-ND
+ICP14-NAND,Part numbers approximate,DigiKey,296-1563-5-ND
+ICP14-INV,Part numbers approximate,DigiKey,296-1566-5-ND
