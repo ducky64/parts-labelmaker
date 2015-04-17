@@ -32,11 +32,11 @@ TPP40-BARE,,,DigiKey,5021K-ND,,,,,,
 TPS08-1,,,DigiKey,A106144CT-ND,,,,,,
 TPS06-1,,,DigiKey,A106145CT-ND,,,,,,
 ICP04-S6986,,Additional stock in TA cabinet,,S6986,,S6986,,Vcc=4.5-16V;fmax=0.5kHz,LIGHT MODULATION PHOTO IC,S6986
-APP25-BOARD,,,,http://www.alliedelec.com/anderson-power-products-1377g2-bk/70162020/,,Powerpole Cntct PCB,,,,1377G2
-APW15-LOOSE,,,,http://www.powerwerx.com/anderson-powerpoles/powerpole-sets/15-amp-red-black-anderson-powerpole-sets.html,,Powerpole Housing,,"Type=Loose;Color=Red, Black",,"1327, 1327G6"
-APW15-BONDED,NOLABEL,,,http://www.powerwerx.com/anderson-powerpoles/powerpole-sets/15-amp-permanently-bonded-red-black-anderson-powerpole-sets.html,,Powerpole Housing,,"Type=Bonded;Color=Red, Black",,"1327, 1327G6"
-APW15-CONTACT,,,,http://www.powerwerx.com/anderson-powerpoles/housings-contacts/1332-15-amp-powerpole-contacts.html,,"Powerpole Cntct, 15A",,Wire=16-20 AWG,,1332
-APW30-CONTACT,,,,http://www.powerwerx.com/anderson-powerpoles/housings-contacts/1331-30-amp-powerpole-contacts.html,,"Powerpole Cntct, 30A",,Wire=12-16 AWG,,1331
+APP25,,,,http://www.alliedelec.com/anderson-power-products-1377g2-bk/70162020/,,Powerpole Cntct PCB,,,,1377G2
+APH15,,,,http://www.powerwerx.com/anderson-powerpoles/powerpole-sets/15-amp-red-black-anderson-powerpole-sets.html,,Powerpole Housing,,"Type=Loose;Color=Red, Black",,"1327, 1327G6"
+APH15-BONDED,NOLABEL,,,http://www.powerwerx.com/anderson-powerpoles/powerpole-sets/15-amp-permanently-bonded-red-black-anderson-powerpole-sets.html,,Powerpole Housing,,"Type=Bonded;Color=Red, Black",,"1327, 1327G6"
+APW15,,,,http://www.powerwerx.com/anderson-powerpoles/housings-contacts/1332-15-amp-powerpole-contacts.html,,"Powerpole Cntct, 15A",,Wire=16-20 AWG,,1332
+APW30,,,,http://www.powerwerx.com/anderson-powerpoles/housings-contacts/1331-30-amp-powerpole-contacts.html,,"Powerpole Cntct, 30A",,Wire=12-16 AWG,,1331
 CNW01-MTA2,,Part numbers approximate,DigiKey,A30978-ND,,,,,,
 CNW01-MTA3,,Part numbers approximate,DigiKey,A30979-ND,,,,,,
 CNW01-MTA4,,Part numbers approximate,DigiKey,A30980-ND,,,,,,

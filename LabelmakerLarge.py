@@ -36,7 +36,7 @@ LABEL_TWIDTH = LABEL_DWIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 
-FONT_LARGE = 13
+FONT_LARGE = (14, 0.7)
 FONT_MAIN = 7
 FONT_SMALL = 5
 HSCALE = 0.75
@@ -99,7 +99,7 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
   
   PdfCommon.draw_text(c, desc, LABEL_TEXT_MARGIN, 0.75*inch, 
                       clipx=LABEL_MAIN_TWIDTH, anchor='lc',
-                      font='Helvetica-Bold', size=FONT_LARGE, hscale=HSCALE)
+                      font='Helvetica-Bold', size=FONT_LARGE[0], hscale=FONT_LARGE[1])
   
   c.translate(LABEL_MAIN_WIDTH, 0)
   c.line(0, 0.25*inch, 0, LABEL_DHEIGHT)
