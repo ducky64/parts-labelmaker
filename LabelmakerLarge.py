@@ -32,13 +32,16 @@ LABEL_MAIN_WIDTH = 1.5*inch
 LABEL_SEC_WIDTH = LABEL_DWIDTH - LABEL_MAIN_WIDTH
 
 LABEL_TEXT_MARGIN = 0.025*inch
+LABEL_TWIDTH = LABEL_DWIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_MAIN_TWIDTH = LABEL_MAIN_WIDTH - 2*LABEL_TEXT_MARGIN
 LABEL_SEC_TWIDTH = LABEL_SEC_WIDTH - 2*LABEL_TEXT_MARGIN
 
-FONT_LARGE = 14
+FONT_LARGE = 13
 FONT_MAIN = 7
 FONT_SMALL = 5
-HSCALE = 0.8
+HSCALE = 0.75
+
+BARCODE_SCALE = 0.003*inch
 
 def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
              border=False):
@@ -51,20 +54,28 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
   
   c.setLineWidth(0.5)
   
-  PdfCommon.draw_text(c, "< MFR P/N", LABEL_MAIN_TWIDTH+LABEL_TEXT_MARGIN, 0.0625*inch, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='rc', 
-                      font='Courier', size=FONT_SMALL, hscale=HSCALE)
-  PdfCommon.draw_text(c, mfrpn, LABEL_TEXT_MARGIN, 0.0625*inch, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
-                      font='Courier-Bold', size=FONT_MAIN, hscale=HSCALE)
+  barcode_img = Code128.code128_image(barcode)
+  barcode_width, _ = barcode_img.size
+  c.drawImage(ImageReader(barcode_img), 
+              LABEL_TEXT_MARGIN, LABEL_TEXT_MARGIN, 
+              width=barcode_width*BARCODE_SCALE, height=0.125*inch - 2*LABEL_TEXT_MARGIN)
+  
+  PdfCommon.draw_text(c, barcode, 
+                      LABEL_DWIDTH - LABEL_TEXT_MARGIN, 0.0625*inch, 
+                      clipx=LABEL_TWIDTH, anchor='rc', 
+                      font='Courier', size=FONT_MAIN, hscale=HSCALE)
 
-  c.line(0, 0.125*inch, LABEL_MAIN_WIDTH, 0.125*inch)
+  c.line(0, 0.125*inch, LABEL_DWIDTH, 0.125*inch)
+
+  w, _ = PdfCommon.draw_text(c, mfrpn, LABEL_TEXT_MARGIN, 0.1875*inch, 
+                      clipx=LABEL_TWIDTH, anchor='lc', 
+                      font='Courier-Bold', size=FONT_MAIN, hscale=HSCALE)
    
-  PdfCommon.draw_text(c, mfrdesc, LABEL_TEXT_MARGIN, 0.1875*inch, 
-                      clipx=LABEL_MAIN_TWIDTH, anchor='lc', 
+  PdfCommon.draw_text(c, mfrdesc, w + 4*LABEL_TEXT_MARGIN + LABEL_TEXT_MARGIN, 0.1875*inch, 
+                      clipx=LABEL_TWIDTH - w - 4*LABEL_TEXT_MARGIN, anchor='lc', 
                       font='Courier', size=FONT_MAIN, hscale=HSCALE)
    
-  c.line(0, 0.25*inch, LABEL_MAIN_WIDTH, 0.25*inch)
+  c.line(0, 0.25*inch, LABEL_DWIDTH, 0.25*inch)
   
   c.saveState()
   p = c.beginPath()
@@ -91,22 +102,12 @@ def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
                       font='Helvetica-Bold', size=FONT_LARGE, hscale=HSCALE)
   
   c.translate(LABEL_MAIN_WIDTH, 0)
-  c.line(0, 0, 0, LABEL_DHEIGHT)
+  c.line(0, 0.25*inch, 0, LABEL_DHEIGHT)
   
-  PdfCommon.draw_text(c, package, LABEL_TEXT_MARGIN, 0.0625*inch, 
-                      clipx=LABEL_SEC_TWIDTH, anchor='lc', hscale=HSCALE)
-  
-  c.line(0, 0.625*inch, LABEL_SEC_WIDTH, 0.625*inch)
-  
-  barcode_img = Code128.code128_image(barcode)
-  c.drawImage(ImageReader(barcode_img), 
-              LABEL_TEXT_MARGIN, 0.625*inch+LABEL_TEXT_MARGIN, 
-              width=LABEL_SEC_TWIDTH, height=0.25*inch - 2*LABEL_TEXT_MARGIN - 0.075*inch)
-  
-  PdfCommon.draw_text(c, barcode, 
-                      LABEL_TEXT_MARGIN + LABEL_SEC_TWIDTH / 2, 0.8125*inch, 
-                      clipx=LABEL_SEC_TWIDTH, anchor='cc', 
-                      font='Courier', size=6)
+  PdfCommon.draw_text(c, package, LABEL_SEC_TWIDTH + LABEL_TEXT_MARGIN, 
+                      LABEL_DHEIGHT - 0.0625*inch,
+                      clipx=LABEL_SEC_TWIDTH,
+                      anchor='rc', size=FONT_MAIN, hscale=HSCALE)
 
   c.restoreState()
   
@@ -132,11 +133,16 @@ if __name__ == '__main__':
     c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
     c.saveState()
     
-    rownum = 5 # y position
+    rownum = 0 # y position
     colnum = 0 # x position
 
     for row in reader:
       print("Generating %s='%s'" % (row['Barcode'], row['Desc']))
+      
+      if 'Directive' in row:
+        if row['Directive'] == 'NOLABEL':
+          continue
+      
       notes = ""
       if 'Notes' in row:
         notes = row['Notes']
