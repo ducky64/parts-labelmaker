@@ -46,13 +46,14 @@ BARCODE_SCALE = 0.0025*inch
 def draw_set(c, desc, package, parametrics, mfrdesc, mfrpn, barcode, notes,
              border=False):
   c.saveState()
+  
+  c.setLineWidth(0.25)
+  
   if border:
     c.roundRect(0, 0, LABEL_WIDTH, LABEL_HEIGHT, LABEL_RADIUS)
     
   c.translate(LABEL_MARGIN, LABEL_MARGIN)
   c.roundRect(0, 0, LABEL_DWIDTH, LABEL_DHEIGHT, LABEL_RADIUS)
-  
-  c.setLineWidth(0.5)
   
   barcode_img = Code128.code128_image(barcode)
   barcode_width, _ = barcode_img.size

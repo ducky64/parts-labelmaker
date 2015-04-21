@@ -146,10 +146,10 @@ category_rewrite = {
   {}),
 'Capacitors': rewrite_gen(
   "Capacitor, %(Capacitance)s",
-  [('Type', 'Type'),
+  [('Type ', 'Type '),
    ('Tolerance', 'Tol'),
    ('Voltage - Rated', 'Vmax')],
-  {('Family', 'Type'): {
+  {('Family', 'Type '): {
       'Aluminum Capacitors': 'Aluminum',
       'Tantalum Capacitors': 'Tantalum',
       'Ceramic Capacitors': 'Ceramic',
@@ -158,11 +158,11 @@ category_rewrite = {
   }),
 'Ceramic Capacitors': rewrite_gen(
   "Capacitor, %(Capacitance)s",
-  [('Type', 'Type'),
+  [('Type ', 'Type '),
    ('Tolerance', 'Tol'),
    ('Voltage - Rated', 'Vmax'),
    ('Temperature Coefficient', 'Dielectric')],
-  {('Family', 'Type'): {
+  {('Family', 'Type '): {
       'Aluminum Capacitors': 'Aluminum',
       'Tantalum Capacitors': 'Tantalum',
       'Ceramic Capacitors': 'Ceramic',
