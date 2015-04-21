@@ -142,7 +142,7 @@ if __name__ == '__main__':
     colnum = args.startcol # x position
 
     for row in reader:
-      print("Generating %s='%s'" % (row['Barcode'], row['Desc']))
+      print("Generating %s" % row['Barcode'])
       
       if 'Directive' in row:
         if row['Directive'] == 'NOLABEL':
