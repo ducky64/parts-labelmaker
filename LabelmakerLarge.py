@@ -121,6 +121,10 @@ if __name__ == '__main__':
                       help="Input filename, without the .csv extension")
   parser.add_argument('--border', '-b', type=bool, default=False,
                       help="Generate borders around each label (for debugging)")
+  parser.add_argument('--startrow', '-r', type=int, default=0,
+                      help="Starting row number, with 0 being the first")
+  parser.add_argument('--startcol', '-c', type=int, default=0,
+                      help="Starting column number, with 0 being the first")
   args = parser.parse_args()
   
   input_filename = args.filename + INPUT_POSTFIX + '.csv'
@@ -133,8 +137,8 @@ if __name__ == '__main__':
     c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
     c.saveState()
     
-    rownum = 5 # y position
-    colnum = 0 # x position
+    rownum = args.startrow # y position
+    colnum = args.startcol # x position
 
     for row in reader:
       print("Generating %s='%s'" % (row['Barcode'], row['Desc']))
