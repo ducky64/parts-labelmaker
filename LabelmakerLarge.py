@@ -133,7 +133,7 @@ if __name__ == '__main__':
     c.translate(PAGE_MARGIN_WIDTH, PAGE_MARGIN_HEIGHT)
     c.saveState()
     
-    rownum = 0 # y position
+    rownum = 5 # y position
     colnum = 0 # x position
 
     for row in reader:
@@ -148,7 +148,7 @@ if __name__ == '__main__':
         notes = row['Notes']
       
       c.saveState()
-      c.translate(colnum*LABEL_WIDTH, rownum*LABEL_HEIGHT)
+      c.translate(colnum*(LABEL_WIDTH + LABEL_SPACING_WIDTH), rownum*LABEL_HEIGHT)
         
       draw_set(c, row['Desc'], row['Package'],
                Common.string_to_parametric(row['Parameters']),
