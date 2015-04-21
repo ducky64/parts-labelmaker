@@ -131,7 +131,7 @@ if __name__ == '__main__':
   input_filename = args.filename + INPUT_POSTFIX + '.csv'
   output_filename = args.filename + '.pdf'
   
-  with open(input_filename, 'r') as csvfile:
+  with open(input_filename, 'r', encoding='utf-8') as csvfile:
     reader = csv.DictReader(csvfile)
     
     c = canvas.Canvas(output_filename, pagesize=letter, bottomup=0)
