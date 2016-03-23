@@ -1,3 +1,11 @@
+# DEPRECATED
+A successor SVG-based label generation system is here: https://github.com/ducky64/labelmaker
+SVG templates are easier to design, using WYSIWYG software like Inkscape.
+
+A full stack example which pulls data from Digi-Key and generates labels is here: https://github.com/ucb-supernode/labels
+
+The data set in this repository has not been migrated (yet).
+
 # parts-labelmaker
 Label generator for electronic parts. Complete spreadsheet-to-labels functionality.
 
